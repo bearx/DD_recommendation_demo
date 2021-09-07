@@ -1,10 +1,10 @@
 import requests
 import numpy as np
 import scipy.sparse.linalg as slinalg
-import scipy.sparse
+import os
 cookies=""#your cookies
 acc=20
-k=10
+k=int(input("How many?"))
 def cos_sim(x,y):
     nemerator = x * y.T
     denominator = np.sqrt(x * x.T) * np.sqrt(y * y.T)
@@ -134,6 +134,8 @@ for x in not_inter:
                 predict[x]=predict[x]+w[x,j]*item[0,j]
 res=sorted(predict.items(), key=lambda d:d[1], reverse=True)
 print("----------all prediction----------")
+f=open("dd.txt","w")
+print("All prediction:",file=f)
 top_recom=[]
 len_result=len(res)
 now,cur=0,0
@@ -144,7 +146,9 @@ while now<k and cur<len_result:
     cur+=1
 for id,x in enumerate(top_recom):
     print(id,':',str(x))
+    print(id,':',str(x),file=f)
 print("----------alive prediction----------")
+print("\nAlive prediction:",file=f)
 top_recom=[]
 len_result=len(res)
 now,cur=0,0
@@ -155,3 +159,5 @@ while now<k and cur<len_result:
     cur+=1
 for id,x in enumerate(top_recom):
     print(id,':',str(x))
+    print(id,':',str(x),file=f)
+os.system("pause")
